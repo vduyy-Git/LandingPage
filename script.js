@@ -314,21 +314,43 @@
     }, 4000);
   });
 
-  // ─── MUSIC TOGGLE ──────────────────────────────────
+  // ─── MUSIC – AUTO PLAY & LOOP ──────────────────────
   const musicToggle = document.getElementById('music-toggle');
   const audio = new Audio('music.mp3');
   audio.loop = true;
   audio.volume = 0.5;
   let isPlaying = false;
 
-  musicToggle.addEventListener('click', () => {
+  function startMusic() {
+    audio.play().then(() => {
+      isPlaying = true;
+      musicToggle.classList.add('playing');
+    }).catch(() => {});
+  }
+
+  // Trình duyệt chặn autoplay nếu chưa có tương tác
+  // → Tự phát nhạc ngay khi người dùng click/scroll/chạm lần đầu
+  const autoplayEvents = ['click', 'scroll', 'touchstart', 'keydown'];
+  function autoplayOnInteraction() {
+    startMusic();
+    autoplayEvents.forEach(evt => {
+      document.removeEventListener(evt, autoplayOnInteraction);
+    });
+  }
+  autoplayEvents.forEach(evt => {
+    document.addEventListener(evt, autoplayOnInteraction, { once: false, passive: true });
+  });
+
+  // Nút toggle để bật/tắt nhạc
+  musicToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
     if (isPlaying) {
       audio.pause();
+      isPlaying = false;
+      musicToggle.classList.remove('playing');
     } else {
-      audio.play();
+      startMusic();
     }
-    isPlaying = !isPlaying;
-    musicToggle.classList.toggle('playing', isPlaying);
   });
 
   // ─── SMOOTH PARALLAX ON HERO ──────────────────────
