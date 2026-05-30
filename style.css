@@ -825,9 +825,9 @@ a {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  z-index: 1000;
-  width: 44px;
-  height: 44px;
+  z-index: 10001;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background: var(--bg-glass);
   border: 1px solid var(--border-accent);
@@ -987,6 +987,14 @@ a {
   /* Nav hidden on mobile */
   .floating-nav {
     display: none;
+  }
+
+  /* Music button bigger on mobile */
+  .music-toggle {
+    width: 56px;
+    height: 56px;
+    bottom: 16px;
+    right: 16px;
   }
 }
 
