@@ -145,6 +145,7 @@ a {
   color: var(--gold);
   font-weight: 600;
   margin-bottom: 50px;
+  white-space: nowrap;
 }
 
 .welcome-btn {
@@ -334,6 +335,7 @@ a {
   letter-spacing: 8px;
   color: var(--gold);
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .date-line {
