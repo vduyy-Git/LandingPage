@@ -321,29 +321,59 @@
   const audio = document.getElementById('bg-music');
   let isPlaying = false;
 
+  // Mở khóa audio cho in-app browser (Messenger, Zalo, Facebook...)
+  function unlockAudio() {
+    audio.muted = true;
+    audio.play().then(() => {
+      audio.pause();
+      audio.muted = false;
+      audio.currentTime = 0;
+    }).catch(() => {});
+
+    // Unlock Web Audio API context
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const buf = ctx.createBuffer(1, 1, 22050);
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      src.connect(ctx.destination);
+      src.start(0);
+      ctx.resume();
+    } catch(e) {}
+  }
+
   function playMusic() {
+    audio.muted = false;
     const promise = audio.play();
     if (promise !== undefined) {
       promise.then(() => {
         isPlaying = true;
         musicToggle.classList.add('playing');
-      }).catch(() => {});
+      }).catch(() => {
+        // Thử lại sau 500ms
+        setTimeout(() => {
+          audio.play().then(() => {
+            isPlaying = true;
+            musicToggle.classList.add('playing');
+          }).catch(() => {});
+        }, 500);
+      });
     }
   }
 
-  function enterSite() {
+  function enterSite(e) {
+    if (e) e.preventDefault();
     if (welcomeScreen.classList.contains('hidden')) return;
+    unlockAudio();
     welcomeScreen.classList.add('hidden');
     document.body.style.overflow = '';
-    playMusic();
+    // Delay nhỏ để đảm bảo audio đã unlock
+    setTimeout(playMusic, 300);
   }
 
-  // Bấm hoặc chạm "Mở Thiệp Cưới" → vào trang + phát nhạc
+  // Bắt tất cả sự kiện có thể trên mobile
   welcomeBtn.addEventListener('click', enterSite);
-  welcomeBtn.addEventListener('touchend', (e) => {
-    e.preventDefault();
-    enterSite();
-  });
+  welcomeBtn.addEventListener('touchstart', enterSite, { passive: false });
 
   // Chặn scroll khi welcome screen đang hiện
   document.body.style.overflow = 'hidden';
