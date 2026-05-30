@@ -77,6 +77,85 @@ a {
 }
 
 /* ========================================
+   WELCOME SCREEN
+   ======================================== */
+.welcome-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: radial-gradient(ellipse at center, #1a1520 0%, #0a0a0f 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.welcome-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.welcome-content {
+  text-align: center;
+  animation: fadeSlideDown 1s ease forwards;
+}
+
+.welcome-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.welcome-names {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  color: var(--gold-light);
+  margin-bottom: 12px;
+  text-shadow: 0 0 60px var(--accent-glow);
+}
+
+.welcome-date {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  letter-spacing: 6px;
+  color: var(--text-secondary);
+  margin-bottom: 50px;
+}
+
+.welcome-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 40px;
+  background: linear-gradient(135deg, var(--accent), var(--gold-dark));
+  color: var(--bg-primary);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: var(--transition);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.welcome-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px var(--accent-glow);
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 4px 20px var(--accent-glow); }
+  50% { box-shadow: 0 4px 40px rgba(200, 149, 108, 0.4); }
+}
+
+/* ========================================
    FALLING CANVAS (hearts & petals)
    ======================================== */
 #fallingCanvas {

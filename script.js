@@ -314,42 +314,53 @@
     }, 4000);
   });
 
-  // ─── MUSIC – AUTO PLAY & LOOP ──────────────────────
+  // ─── WELCOME SCREEN & MUSIC ────────────────────────
+  const welcomeScreen = document.getElementById('welcome-screen');
+  const welcomeBtn = document.getElementById('welcome-enter');
   const musicToggle = document.getElementById('music-toggle');
-  const audio = new Audio('music.mp3');
-  audio.loop = true;
-  audio.volume = 0.5;
+  const audio = document.getElementById('bg-music');
   let isPlaying = false;
 
-  function startMusic() {
-    audio.play().then(() => {
-      isPlaying = true;
-      musicToggle.classList.add('playing');
-    }).catch(() => {});
+  function playMusic() {
+    const promise = audio.play();
+    if (promise !== undefined) {
+      promise.then(() => {
+        isPlaying = true;
+        musicToggle.classList.add('playing');
+      }).catch(() => {});
+    }
   }
 
-  // Trình duyệt chặn autoplay nếu chưa có tương tác
-  // → Tự phát nhạc ngay khi người dùng click/scroll/chạm lần đầu
-  const autoplayEvents = ['click', 'scroll', 'touchstart', 'keydown'];
-  function autoplayOnInteraction() {
-    startMusic();
-    autoplayEvents.forEach(evt => {
-      document.removeEventListener(evt, autoplayOnInteraction);
-    });
+  function enterSite() {
+    if (welcomeScreen.classList.contains('hidden')) return;
+    welcomeScreen.classList.add('hidden');
+    document.body.style.overflow = '';
+    playMusic();
   }
-  autoplayEvents.forEach(evt => {
-    document.addEventListener(evt, autoplayOnInteraction, { once: false, passive: true });
+
+  // Bấm hoặc chạm "Mở Thiệp Cưới" → vào trang + phát nhạc
+  welcomeBtn.addEventListener('click', enterSite);
+  welcomeBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    enterSite();
   });
 
-  // Nút toggle để bật/tắt nhạc
-  musicToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
+  // Chặn scroll khi welcome screen đang hiện
+  document.body.style.overflow = 'hidden';
+
+  // Hết nhạc → tự reload trang
+  audio.addEventListener('ended', () => {
+    window.location.reload();
+  });
+
+  // Nút toggle bật/tắt nhạc
+  musicToggle.addEventListener('click', () => {
     if (isPlaying) {
       audio.pause();
       isPlaying = false;
       musicToggle.classList.remove('playing');
     } else {
-      startMusic();
+      playMusic();
     }
   });
 
