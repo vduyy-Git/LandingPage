@@ -318,68 +318,48 @@
   const welcomeScreen = document.getElementById('welcome-screen');
   const welcomeBtn = document.getElementById('welcome-enter');
   const musicToggle = document.getElementById('music-toggle');
-  const audio = document.getElementById('bg-music');
+  let audio = null;
   let isPlaying = false;
   let hasEntered = false;
-
-  // Load sẵn audio
-  audio.load();
-
-  function enterSite(e) {
-    if (e) e.preventDefault();
-    if (hasEntered) return;
-    hasEntered = true;
-
-    // QUAN TRỌNG: audio.play() PHẢI được gọi trực tiếp trong event handler
-    // Không được dùng setTimeout/Promise - iOS sẽ chặn
-    audio.play().then(() => {
-      isPlaying = true;
-      musicToggle.classList.add('playing');
-    }).catch(() => {
-      // Nếu vẫn bị chặn, thử unlock rồi play lại
-      try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        ctx.resume().then(() => {
-          audio.play().then(() => {
-            isPlaying = true;
-            musicToggle.classList.add('playing');
-          }).catch(() => {});
-        });
-      } catch(err) {}
-    });
-
-    welcomeScreen.classList.add('hidden');
-    document.body.style.overflow = '';
-  }
-
-  // Bắt cả click và touch
-  welcomeBtn.addEventListener('click', enterSite);
-  welcomeBtn.addEventListener('touchend', function(e) {
-    e.preventDefault();
-    enterSite(e);
-  }, { passive: false });
 
   // Chặn scroll khi welcome screen đang hiện
   document.body.style.overflow = 'hidden';
 
-  // Hết nhạc → tự reload trang
-  audio.addEventListener('ended', () => {
-    window.location.reload();
-  });
+  welcomeBtn.onclick = function() {
+    if (hasEntered) return;
+    hasEntered = true;
+
+    // Tạo audio NGAY TRONG click handler – cách duy nhất hoạt động trên iOS
+    audio = new Audio();
+    audio.src = 'music.mp3';
+    audio.volume = 0.5;
+    audio.setAttribute('playsinline', '');
+    audio.play();
+    isPlaying = true;
+    musicToggle.classList.add('playing');
+
+    // Hết nhạc → reload
+    audio.onended = function() {
+      window.location.reload();
+    };
+
+    welcomeScreen.classList.add('hidden');
+    document.body.style.overflow = '';
+  };
 
   // Nút toggle bật/tắt nhạc
-  musicToggle.addEventListener('click', () => {
+  musicToggle.onclick = function() {
+    if (!audio) return;
     if (isPlaying) {
       audio.pause();
       isPlaying = false;
       musicToggle.classList.remove('playing');
     } else {
-      audio.play().then(() => {
-        isPlaying = true;
-        musicToggle.classList.add('playing');
-      }).catch(() => {});
+      audio.play();
+      isPlaying = true;
+      musicToggle.classList.add('playing');
     }
-  });
+  };
 
   // ─── SMOOTH PARALLAX ON HERO ──────────────────────
   const hero = document.getElementById('hero');
