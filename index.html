@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Văn Nguyên & Hiền Thư – 30.07.2026</title>
+  <meta name="description" content="Thiệp cưới Văn Nguyên & Hiền Thư – Ngày 30 tháng 7. Chúng tôi trân trọng kính mời bạn đến chung vui." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Josefin+Sans:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ FALLING ELEMENTS CANVAS ============ -->
+  <canvas id="fallingCanvas"></canvas>
+
+  <!-- ============ HERO SECTION ============ -->
+  <section id="hero" class="section hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content" data-animate="fade-up">
+      <p class="hero-subtitle">We're Getting Married</p>
+      <h1 class="hero-names">
+        <span class="name">Văn Nguyên</span>
+        <span class="ampersand">&</span>
+        <span class="name">Hiền Thư</span>
+      </h1>
+      <div class="hero-date">
+        <div class="date-line"></div>
+        <span>30 . 07 . 2026</span>
+        <div class="date-line"></div>
+      </div>
+      <a href="#story" class="scroll-btn" aria-label="Cuộn xuống">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ COUNTDOWN ============ -->
+  <section id="countdown" class="section countdown-section">
+    <div class="container" data-animate="fade-up">
+      <h2 class="section-title">Đếm Ngược</h2>
+      <p class="section-subtitle">Đến ngày trọng đại của chúng tôi</p>
+      <div class="countdown-grid">
+        <div class="countdown-item">
+          <span id="cd-days" class="countdown-number">00</span>
+          <span class="countdown-label">Ngày</span>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-item">
+          <span id="cd-hours" class="countdown-number">00</span>
+          <span class="countdown-label">Giờ</span>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-item">
+          <span id="cd-minutes" class="countdown-number">00</span>
+          <span class="countdown-label">Phút</span>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-item">
+          <span id="cd-seconds" class="countdown-number">00</span>
+          <span class="countdown-label">Giây</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OUR STORY ============ -->
+  <section id="story" class="section story-section">
+    <div class="container" data-animate="fade-up">
+      <h2 class="section-title">Câu Chuyện Tình Yêu</h2>
+      <p class="section-subtitle">Hành trình đến bên nhau</p>
+      <div class="story-timeline">
+        <div class="timeline-item" data-animate="fade-right">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <img src="images/IMG_8146.JPG" alt="Khoảnh khắc của chúng tôi" class="timeline-img" loading="lazy" />
+            <div class="timeline-text">
+              <h3>Lần Đầu Gặp Gỡ</h3>
+              <p>Đôi khi, tình yêu bắt đầu từ một ánh nhìn, một nụ cười và những rung động đầu tiên không thể nào quên.</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item" data-animate="fade-left">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content reverse">
+            <img src="images/IMG_8161.JPG" alt="Khoảnh khắc của chúng tôi" class="timeline-img" loading="lazy" />
+            <div class="timeline-text">
+              <h3>Yêu Thương Lớn Dần</h3>
+              <p>Qua từng ngày bên nhau, tình yêu ngày càng sâu đậm, trở thành một phần không thể thiếu trong cuộc sống.</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item" data-animate="fade-right">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <img src="images/IMG_8204.JPG" alt="Khoảnh khắc của chúng tôi" class="timeline-img" loading="lazy" />
+            <div class="timeline-text">
+              <h3>Lời Cầu Hôn</h3>
+              <p>Và rồi, khoảnh khắc thiêng liêng nhất đã đến – lời hứa sẽ cùng nhau đi hết cuộc đời này.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section id="gallery" class="section gallery-section">
+    <div class="container" data-animate="fade-up">
+      <h2 class="section-title">Khoảnh Khắc Đẹp</h2>
+      <p class="section-subtitle">Những bức ảnh kể câu chuyện của chúng tôi</p>
+      <div class="gallery-grid">
+        <div class="gallery-item large" data-animate="zoom-in">
+          <img src="images/IMG_8231.JPG" alt="Ảnh cưới Văn Nguyên & Hiền Thư" loading="lazy" />
+          <div class="gallery-overlay"><span>❤</span></div>
+        </div>
+        <div class="gallery-item" data-animate="zoom-in">
+          <img src="images/IMG_8236.JPG" alt="Ảnh cưới Văn Nguyên & Hiền Thư" loading="lazy" />
+          <div class="gallery-overlay"><span>❤</span></div>
+        </div>
+        <div class="gallery-item" data-animate="zoom-in">
+          <img src="images/IMG_8289.JPG" alt="Ảnh cưới Văn Nguyên & Hiền Thư" loading="lazy" />
+          <div class="gallery-overlay"><span>❤</span></div>
+        </div>
+        <div class="gallery-item tall" data-animate="zoom-in">
+          <img src="images/IMG_8500.JPG" alt="Ảnh cưới Văn Nguyên & Hiền Thư" loading="lazy" />
+          <div class="gallery-overlay"><span>❤</span></div>
+        </div>
+        <div class="gallery-item" data-animate="zoom-in">
+          <img src="images/IMG_8627.JPG" alt="Ảnh cưới Văn Nguyên & Hiền Thư" loading="lazy" />
+          <div class="gallery-overlay"><span>❤</span></div>
+        </div>
+        <div class="gallery-item large" data-animate="zoom-in">
+          <img src="images/IMG_8628.JPG" alt="Ảnh cưới Văn Nguyên & Hiền Thư" loading="lazy" />
+          <div class="gallery-overlay"><span>❤</span></div>
+        </div>
+        <div class="gallery-item" data-animate="zoom-in">
+          <img src="images/IMG_8765.JPG" alt="Ảnh cưới Văn Nguyên & Hiền Thư" loading="lazy" />
+          <div class="gallery-overlay"><span>❤</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LIGHTBOX ============ -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-hidden="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Đóng">&times;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Trước">&#10094;</button>
+    <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Sau">&#10095;</button>
+    <img id="lightbox-img" src="" alt="Ảnh phóng to" />
+  </div>
+
+  <!-- ============ EVENT INFO ============ -->
+  <section id="event" class="section event-section">
+    <div class="container" data-animate="fade-up">
+      <h2 class="section-title">Tiệc Cưới</h2>
+      <p class="section-subtitle">Trân trọng kính mời bạn đến chung vui</p>
+      <div class="event-cards">
+        <div class="event-card" data-animate="fade-right">
+          <div class="event-icon">💒</div>
+          <h3>Lễ Thành Hôn</h3>
+          <p class="event-time">10:00 – 30/07/2026</p>
+          <p class="event-location">Tư gia nhà trai</p>
+        </div>
+        <div class="event-card" data-animate="fade-left">
+          <div class="event-icon">🥂</div>
+          <h3>Tiệc Mừng</h3>
+          <p class="event-time">18:00 – 30/07/2026</p>
+          <p class="event-location">Trung tâm tiệc cưới</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RSVP / WISHES ============ -->
+  <section id="wishes" class="section wishes-section">
+    <div class="container" data-animate="fade-up">
+      <h2 class="section-title">Gửi Lời Chúc</h2>
+      <p class="section-subtitle">Lời chúc phúc của bạn sẽ là món quà ý nghĩa nhất</p>
+      <form id="wishes-form" class="wishes-form" onsubmit="return false;">
+        <div class="form-group">
+          <input type="text" id="wish-name" placeholder="Tên của bạn" required />
+        </div>
+        <div class="form-group">
+          <textarea id="wish-message" rows="4" placeholder="Lời chúc phúc..." required></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="btn-send-wish">
+          <span>Gửi Lời Chúc</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </form>
+      <div id="wishes-list" class="wishes-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-hearts">❤ ❤ ❤</div>
+    <p class="footer-names">Văn Nguyên & Hiền Thư</p>
+    <p class="footer-date">30 . 07 . 2026</p>
+    <p class="footer-copy">With love, forever & always</p>
+  </footer>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav id="main-nav" class="floating-nav">
+    <a href="#hero" class="nav-dot active" data-section="hero" aria-label="Hero"></a>
+    <a href="#countdown" class="nav-dot" data-section="countdown" aria-label="Countdown"></a>
+    <a href="#story" class="nav-dot" data-section="story" aria-label="Story"></a>
+    <a href="#gallery" class="nav-dot" data-section="gallery" aria-label="Gallery"></a>
+    <a href="#event" class="nav-dot" data-section="event" aria-label="Event"></a>
+    <a href="#wishes" class="nav-dot" data-section="wishes" aria-label="Wishes"></a>
+  </nav>
+
+  <!-- ============ MUSIC TOGGLE ============ -->
+  <button id="music-toggle" class="music-toggle" aria-label="Bật/Tắt nhạc">
+    <span class="music-bars">
+      <span></span><span></span><span></span><span></span>
+    </span>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
