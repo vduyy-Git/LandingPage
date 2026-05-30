@@ -314,11 +314,19 @@
     }, 4000);
   });
 
-  // ─── MUSIC TOGGLE (placeholder) ───────────────────
+  // ─── MUSIC TOGGLE ──────────────────────────────────
   const musicToggle = document.getElementById('music-toggle');
+  const audio = new Audio('music.mp3');
+  audio.loop = true;
+  audio.volume = 0.5;
   let isPlaying = false;
 
   musicToggle.addEventListener('click', () => {
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
     isPlaying = !isPlaying;
     musicToggle.classList.toggle('playing', isPlaying);
   });
