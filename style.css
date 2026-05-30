@@ -81,13 +81,17 @@ a {
    ======================================== */
 .welcome-screen {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 99999;
   background: radial-gradient(ellipse at center, #1a1520 0%, #0a0a0f 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: opacity 0.8s ease, visibility 0.8s ease;
+  -webkit-overflow-scrolling: touch;
 }
 
 .welcome-screen.hidden {
@@ -98,6 +102,7 @@ a {
 
 .welcome-content {
   text-align: center;
+  padding: 20px;
   animation: fadeSlideDown 1s ease forwards;
 }
 
@@ -112,17 +117,32 @@ a {
 
 .welcome-names {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 8vw, 5rem);
-  color: var(--gold-light);
-  margin-bottom: 12px;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 400;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 20px;
   text-shadow: 0 0 60px var(--accent-glow);
+}
+
+.welcome-names .name {
+  display: block;
+}
+
+.welcome-names .ampersand {
+  display: block;
+  font-size: 0.5em;
+  color: var(--accent);
+  margin: 5px 0;
+  text-shadow: 0 0 40px var(--accent-glow);
 }
 
 .welcome-date {
   font-family: var(--font-heading);
-  font-size: 1rem;
-  letter-spacing: 6px;
-  color: var(--text-secondary);
+  font-size: 1.1rem;
+  letter-spacing: 8px;
+  color: var(--gold);
+  font-weight: 600;
   margin-bottom: 50px;
 }
 
@@ -130,7 +150,7 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 16px 40px;
+  padding: 18px 44px;
   background: linear-gradient(135deg, var(--accent), var(--gold-dark));
   color: var(--bg-primary);
   font-family: var(--font-body);
@@ -143,6 +163,8 @@ a {
   cursor: pointer;
   transition: var(--transition);
   animation: pulse-glow 2s ease-in-out infinite;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .welcome-btn:hover {
