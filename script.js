@@ -320,60 +320,44 @@
   const musicToggle = document.getElementById('music-toggle');
   const audio = document.getElementById('bg-music');
   let isPlaying = false;
+  let hasEntered = false;
 
-  // Mở khóa audio cho in-app browser (Messenger, Zalo, Facebook...)
-  function unlockAudio() {
-    audio.muted = true;
+  // Load sẵn audio
+  audio.load();
+
+  function enterSite(e) {
+    if (e) e.preventDefault();
+    if (hasEntered) return;
+    hasEntered = true;
+
+    // QUAN TRỌNG: audio.play() PHẢI được gọi trực tiếp trong event handler
+    // Không được dùng setTimeout/Promise - iOS sẽ chặn
     audio.play().then(() => {
-      audio.pause();
-      audio.muted = false;
-      audio.currentTime = 0;
-    }).catch(() => {});
-
-    // Unlock Web Audio API context
-    try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const buf = ctx.createBuffer(1, 1, 22050);
-      const src = ctx.createBufferSource();
-      src.buffer = buf;
-      src.connect(ctx.destination);
-      src.start(0);
-      ctx.resume();
-    } catch(e) {}
-  }
-
-  function playMusic() {
-    audio.muted = false;
-    const promise = audio.play();
-    if (promise !== undefined) {
-      promise.then(() => {
-        isPlaying = true;
-        musicToggle.classList.add('playing');
-      }).catch(() => {
-        // Thử lại sau 500ms
-        setTimeout(() => {
+      isPlaying = true;
+      musicToggle.classList.add('playing');
+    }).catch(() => {
+      // Nếu vẫn bị chặn, thử unlock rồi play lại
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        ctx.resume().then(() => {
           audio.play().then(() => {
             isPlaying = true;
             musicToggle.classList.add('playing');
           }).catch(() => {});
-        }, 500);
-      });
-    }
-  }
+        });
+      } catch(err) {}
+    });
 
-  function enterSite(e) {
-    if (e) e.preventDefault();
-    if (welcomeScreen.classList.contains('hidden')) return;
-    unlockAudio();
     welcomeScreen.classList.add('hidden');
     document.body.style.overflow = '';
-    // Delay nhỏ để đảm bảo audio đã unlock
-    setTimeout(playMusic, 300);
   }
 
-  // Bắt tất cả sự kiện có thể trên mobile
+  // Bắt cả click và touch
   welcomeBtn.addEventListener('click', enterSite);
-  welcomeBtn.addEventListener('touchstart', enterSite, { passive: false });
+  welcomeBtn.addEventListener('touchend', function(e) {
+    e.preventDefault();
+    enterSite(e);
+  }, { passive: false });
 
   // Chặn scroll khi welcome screen đang hiện
   document.body.style.overflow = 'hidden';
@@ -390,7 +374,10 @@
       isPlaying = false;
       musicToggle.classList.remove('playing');
     } else {
-      playMusic();
+      audio.play().then(() => {
+        isPlaying = true;
+        musicToggle.classList.add('playing');
+      }).catch(() => {});
     }
   });
 
