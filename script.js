@@ -321,6 +321,7 @@
   const audio = document.getElementById('bg-music');
   let isPlaying = false;
   let hasEntered = false;
+  let enterAttemptInProgress = false;
 
   if (audio) {
     audio.volume = 0.5;
@@ -338,7 +339,11 @@
     if (!audio) return false;
 
     try {
+      audio.muted = false;
       audio.volume = 0.5;
+      if (audio.readyState === 0) {
+        audio.load();
+      }
       await audio.play();
       setMusicState(true);
       return true;
@@ -364,20 +369,22 @@
   // Chặn scroll khi welcome screen đang hiện
   document.body.style.overflow = 'hidden';
 
-  async function enterInvitation() {
-    if (hasEntered) return;
-    hasEntered = true;
+  function enterInvitation() {
+    if (hasEntered || enterAttemptInProgress) return;
+    enterAttemptInProgress = true;
 
-    await playMusic();
+    playMusic().then((played) => {
+      enterAttemptInProgress = false;
 
-    welcomeScreen.classList.add('hidden');
-    document.body.style.overflow = '';
+      if (!played) return;
+
+      hasEntered = true;
+      welcomeScreen.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
   }
 
-  welcomeBtn.addEventListener('touchend', (e) => {
-    e.preventDefault();
-    enterInvitation();
-  }, { passive: false });
+  welcomeBtn.addEventListener('touchstart', enterInvitation, { passive: true });
   welcomeBtn.addEventListener('click', enterInvitation);
 
   // Nút toggle bật/tắt nhạc
