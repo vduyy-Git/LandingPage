@@ -321,9 +321,11 @@
   const audio = document.getElementById('bg-music');
   let isPlaying = false;
   let hasEntered = false;
-  let enterAttemptInProgress = false;
+  const musicSrc = 'music.m4a';
 
   if (audio) {
+    audio.src = musicSrc;
+    audio.preload = 'auto';
     audio.volume = 0.5;
     audio.loop = false;
     audio.load();
@@ -341,7 +343,8 @@
     try {
       audio.muted = false;
       audio.volume = 0.5;
-      if (audio.readyState === 0) {
+      if (!audio.currentSrc || audio.readyState === 0) {
+        audio.src = musicSrc;
         audio.load();
       }
       await audio.play();
@@ -370,12 +373,9 @@
   document.body.style.overflow = 'hidden';
 
   function enterInvitation() {
-    if (hasEntered || enterAttemptInProgress) return;
-    enterAttemptInProgress = true;
+    if (hasEntered) return;
 
     playMusic().then((played) => {
-      enterAttemptInProgress = false;
-
       if (!played) return;
 
       hasEntered = true;
@@ -384,7 +384,7 @@
     });
   }
 
-  welcomeBtn.addEventListener('touchstart', enterInvitation, { passive: true });
+  welcomeBtn.addEventListener('pointerup', enterInvitation);
   welcomeBtn.addEventListener('click', enterInvitation);
 
   // Nút toggle bật/tắt nhạc
