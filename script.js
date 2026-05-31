@@ -318,7 +318,7 @@
   const welcomeScreen = document.getElementById('welcome-screen');
   const welcomeBtn = document.getElementById('welcome-enter');
   const musicToggle = document.getElementById('music-toggle');
-  let audio = null;
+  const audio = document.getElementById('bg-music');
   let isPlaying = false;
   let hasEntered = false;
 
@@ -329,14 +329,14 @@
     if (hasEntered) return;
     hasEntered = true;
 
-    // Tạo audio NGAY TRONG click handler – cách duy nhất hoạt động trên iOS
-    audio = new Audio();
-    audio.src = 'music.mp3';
+    // Phát nhạc sử dụng thẻ audio HTML
     audio.volume = 0.5;
-    audio.setAttribute('playsinline', '');
-    audio.play();
-    isPlaying = true;
-    musicToggle.classList.add('playing');
+    audio.play().then(() => {
+      isPlaying = true;
+      musicToggle.classList.add('playing');
+    }).catch(err => {
+      console.log("Lỗi phát nhạc:", err);
+    });
 
     // Hết nhạc → reload
     audio.onended = function() {
