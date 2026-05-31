@@ -322,44 +322,72 @@
   let isPlaying = false;
   let hasEntered = false;
 
+  if (audio) {
+    audio.volume = 0.5;
+    audio.loop = false;
+    audio.load();
+  }
+
+  function setMusicState(playing) {
+    isPlaying = playing;
+    musicToggle.classList.toggle('playing', playing);
+    musicToggle.setAttribute('aria-pressed', String(playing));
+  }
+
+  async function playMusic() {
+    if (!audio) return false;
+
+    try {
+      audio.volume = 0.5;
+      await audio.play();
+      setMusicState(true);
+      return true;
+    } catch (err) {
+      setMusicState(false);
+      console.log('Audio play failed:', err);
+      return false;
+    }
+  }
+
+  function pauseMusic() {
+    if (!audio) return;
+    audio.pause();
+    setMusicState(false);
+  }
+
+  if (audio) {
+    audio.addEventListener('ended', () => {
+      window.location.reload();
+    });
+  }
+
   // Chặn scroll khi welcome screen đang hiện
   document.body.style.overflow = 'hidden';
 
-  welcomeBtn.onclick = function() {
+  async function enterInvitation() {
     if (hasEntered) return;
     hasEntered = true;
 
-    // Phát nhạc sử dụng thẻ audio HTML
-    audio.volume = 0.5;
-    audio.play().then(() => {
-      isPlaying = true;
-      musicToggle.classList.add('playing');
-    }).catch(err => {
-      console.log("Lỗi phát nhạc:", err);
-    });
-
-    // Hết nhạc → reload
-    audio.onended = function() {
-      window.location.reload();
-    };
+    await playMusic();
 
     welcomeScreen.classList.add('hidden');
     document.body.style.overflow = '';
-  };
+  }
+
+  welcomeBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    enterInvitation();
+  }, { passive: false });
+  welcomeBtn.addEventListener('click', enterInvitation);
 
   // Nút toggle bật/tắt nhạc
-  musicToggle.onclick = function() {
-    if (!audio) return;
+  musicToggle.addEventListener('click', async function() {
     if (isPlaying) {
-      audio.pause();
-      isPlaying = false;
-      musicToggle.classList.remove('playing');
+      pauseMusic();
     } else {
-      audio.play();
-      isPlaying = true;
-      musicToggle.classList.add('playing');
+      await playMusic();
     }
-  };
+  });
 
   // ─── SMOOTH PARALLAX ON HERO ──────────────────────
   const hero = document.getElementById('hero');
