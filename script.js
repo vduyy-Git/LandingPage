@@ -321,7 +321,7 @@
   const audio = document.getElementById('bg-music');
   let isPlaying = false;
   let hasEntered = false;
-  const musicSrc = 'music.m4a';
+  const musicSrc = 'WeddingSong.mp3';
 
   if (audio) {
     audio.src = musicSrc;
